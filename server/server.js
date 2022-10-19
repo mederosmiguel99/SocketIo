@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use(cors())
-  
+
 
 ///Socket.io/ WebSockets
 io.on('connect', socket => {
@@ -41,7 +41,12 @@ io.on("disconnect", () => {
 });
 
 io.on("connection", (socket) => {
-    io.emit('test',`Hello client ${socket}`)
+    socket.emit('test', `Hello client ${socket}`)
+
+    socket.on('hello', (data) => {
+        io.emit('test', data)
+        console.log(data);
+    })
 });
 
 
